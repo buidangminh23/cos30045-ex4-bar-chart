@@ -1,4 +1,4 @@
-// GenAI: steps follow the Exercise 4.4 brief; drafted with Claude Opus 5.5 and reviewed by me
+// GenAI: steps follow the Exercise 4.5 brief; drafted with Claude Opus 5.5 and reviewed by me
 const svg = d3.select(".responsive-svg-container")
   .append("svg")
     .attr("viewBox", "0 0 1200 1600")
@@ -22,4 +22,17 @@ d3.csv("data/tvBrandCount.csv", d => {
 });
 
 const drawBarChart = data => {
+  const barHeight = 20;
+  const barSpacing = 5;
+
+  svg
+    .selectAll("rect")
+    .data(data)
+    .join("rect")
+      .attr("class", d => `bar bar-${d.count}`)
+      .attr("width", d => d.count)
+      .attr("height", barHeight)
+      .attr("x", 0)
+      .attr("y", (d, i) => i * (barHeight + barSpacing))
+      .attr("fill", "#eeaa46");
 };

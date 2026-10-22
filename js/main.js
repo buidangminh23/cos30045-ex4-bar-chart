@@ -1,8 +1,7 @@
-// GenAI: steps follow the Exercise 4.6 brief; drafted with Claude Opus 5.5 and reviewed by me
+// GenAI: steps follow the Exercise 4.7 brief; drafted with Claude Opus 5.5 and reviewed by me
 const svg = d3.select(".responsive-svg-container")
   .append("svg")
-    .attr("viewBox", "0 0 500 700")
-    .style("border", "1px solid black");
+    .attr("viewBox", "0 0 600 700");
 
 d3.csv("data/tvBrandCount.csv", d => {
   return {
@@ -31,14 +30,33 @@ const drawBarChart = data => {
     .range([0, 700])
     .padding(0.2);
 
-  svg
-    .selectAll("rect")
+  const barAndLabel = svg
+    .selectAll("g")
     .data(data)
-    .join("rect")
+    .join("g")
+      .attr("transform", d => `translate(0, ${yScale(d.brand)})`);
+
+  barAndLabel
+    .append("rect")
       .attr("class", d => `bar bar-${d.count}`)
       .attr("width", d => xScale(d.count))
       .attr("height", yScale.bandwidth())
-      .attr("x", 0)
-      .attr("y", d => yScale(d.brand))
+      .attr("x", 120)
+      .attr("y", 0)
       .attr("fill", "#eeaa46");
+
+  barAndLabel
+    .append("text")
+      .text(d => d.brand)
+      .attr("x", 112)
+      .attr("y", yScale.bandwidth() / 2 + 5)
+      .attr("text-anchor", "end")
+      .style("font-size", "13px");
+
+  barAndLabel
+    .append("text")
+      .text(d => d.count)
+      .attr("x", d => 120 + xScale(d.count) + 5)
+      .attr("y", yScale.bandwidth() / 2 + 5)
+      .style("font-size", "13px");
 };

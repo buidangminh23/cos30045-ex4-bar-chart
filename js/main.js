@@ -1,4 +1,3 @@
-// GenAI: steps follow the Exercise 4.7 brief; drafted with Claude Opus 5.5 and reviewed by me
 const svg = d3.select(".responsive-svg-container")
   .append("svg")
     .attr("viewBox", "0 0 600 700");
